@@ -16,7 +16,8 @@ public class JpaMain {
             //hellojpa.Member member = new hellojpa.Member();
             Member member = em.find(Member.class, 1L);
             member.setId(1L);
-            member.setName("HelloB"); //따로 persist하지 않아도 update가 된다.
+            member.setUsername("HelloB"); //따로 persist하지 않아도 update가 된다.
+
             tx.commit();
         }catch (Exception e){
             tx.rollback();

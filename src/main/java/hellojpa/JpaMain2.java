@@ -4,9 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
-public class Jpql {
+public class JpaMain2 {
 
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
@@ -14,13 +13,12 @@ public class Jpql {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-            List<Member> resultList = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(1)
-                    .setMaxResults(10)
-                    .getResultList();
-            for (Member member : resultList) {
-                System.out.println("member.name = " + member.getUsername());
-            }
+            //hellojpa.Member member = new hellojpa.Member();
+            Member member = new Member();
+            //member.setId(3L);
+            member.setUsername("HelloB");
+            em.persist(member);
+            System.out.println("===============");
             tx.commit();
         }catch (Exception e){
             tx.rollback();
