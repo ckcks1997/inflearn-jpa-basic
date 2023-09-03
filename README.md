@@ -110,3 +110,28 @@ public class Member {
 - Oralce: 시퀀스, MySQL: auto_increment
 - 시퀀스 방식은 미리 여러개를 가져와 메모리에 저장해두고 사용할 수 있다.
 - auto_increment 방식은 insert할 때마다 DB에 쿼리를 날려서 값을 가져온다.(persist하면 바로 insert 쿼리를 날리고 id를 가져온다.)
+
+---
+## 9/3 공부
+#### 실전예제
+- @Entity 이름으로 Member를 사용할 수 없다.(버전 업데이트 되면서 바뀐듯)
+- @Column에는 length같은 속성을 넣을 수 있다.
+- @Table에는 uniqueConstraints나 index같은 속성을 넣을 수 있는데 이런 속성들을 명시해주는 것이 추후 유지보수할 때 좋다.
+- 예제:
+```java
+@Entity
+@Table(name = "ORDERS", indexes = {@Index(name = "ORDERS_ID_INDEX", columnList = "ORDER_ID")})
+public class Order {
+  @Id @GeneratedValue
+  @Column(name = "ORDER_ID", length = 50)
+  private Long id;
+    /*@Column(name = "MEMBER_ID")
+    private Long memberId; // <- 이 방식은 뭔가 객체지향스럽지 않다. 관계형 DB에 맞춘 설계, 객체그래프 탐색 불가..*/
+
+  private Member member; // <- 이런 방식이 더 객체지향스럽다.
+  
+  private LocalDateTime orderDate;
+  @Enumerated(EnumType.STRING)
+  private OrderStatus status;
+}
+```
